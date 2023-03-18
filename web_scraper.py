@@ -39,16 +39,8 @@ def getlinks(soup: BeautifulSoup) -> dict:
 
 
 def getTopOccurences(items: dict) -> dict:
-    top_occurences = items.values()
-    list_of_values = set(top_occurences)
-    list_of_values = list(list_of_values)
-    list_of_values.sort(reverse=True)
-    final_dict = {}
-    for i in range(len(list_of_values)):
-        for item in items:
-            if items[item] == list_of_values[i]:
-                final_dict[item] = items[item]
-                if len(final_dict) == 10:
-                    return final_dict
-
-    return final_dict
+     sorted_dict = sorted(items.items(), key=lambda x: x[1], reverse=True)
+     if len(sorted_dict) > 10:
+         sorted_dict = sorted_dict[:10]
+     converted_dict = dict(sorted_dict)
+     return converted_dict
