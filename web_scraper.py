@@ -39,11 +39,8 @@ def getLinks(soup):
 
 def getTopOccurences(items: dict) -> dict:
     sorted_dict = sorted(items.items(), key=lambda x: x[1], reverse=True)
+    if len(sorted_dict) > 10:
+        sorted_dict = sorted_dict[:10]
     converted_dict = dict(sorted_dict)
-    final_dict = {}
-    for item in converted_dict:
-        final_dict[item] = converted_dict[item]
-        if len(final_dict) == 10:
-            return final_dict
-    return final_dict
+    return converted_dict
 
