@@ -1,38 +1,31 @@
+from bs4 import BeautifulSoup
+import requests
 from urllib.request import Request, urlopen
 
-import requests
-from bs4 import BeautifulSoup
-
-website = 'https://en.wikipedia.org/wiki/Canada'
-website_list = [website]
-pages = []
-souplist = []
-last_page = False
+website = 'https://en.wikipedia.org/wiki/University_of_Toronto'
 
 
 def get_url(url):
-    request = requests.get(website_list[-1])
+    request = requests.get(url)
     if request.status_code != 200:
         print('Error, request status code of {}'.format(request.status_code))
         return None
-
-    pages.append(request)
 
     weburl = Request(website, headers={'User-Agent': 'Mozilla/5.0'})
     data = urlopen(weburl).read()
 
     soup = BeautifulSoup(data, "html.parser")
-    souplist.append(soup)
 
-    getURLs(souplist)
+    getLinks(soup)
 
 
-def getURLs(souplist):
-    allLinks = souplist[-1].find(id="bodyContent").find_all("a")
+def getLinks(soup):
+    allLinks = soup.find(id="bodyContent").find_all("a")
     linkdict = {}
     for x in allLinks:
         x = str(x)
-        if '<a href="/wiki/' in x and not ('<a href="/wiki/Special:BookSources' in x or '<a href="/wiki/Category' in x):
+        if '<a href="/wiki/' in x and not (
+                '<a href="/wiki/Special:BookSources' in x or '<a href="/wiki/Category' in x or '/wiki/Help' in x):
             start = x.find('/')
             end = x.find(' title') - 1
             x = x[start:end]
@@ -59,4 +52,3 @@ def getTopOccurences(items: dict) -> dict:
 
     return final_dict
 
-print(get_url(website))
