@@ -60,8 +60,12 @@ class Graph:
             v2 = self._vertices[item2]
 
             # Add the new edge
-            v1.neighbours[v2] = weightage
-            v2.neighbours[v1] = weightage
+            if v1 in v2.neighbours and v2 in v1.neighbours:
+                v1.neighbours[v2] += weightage
+                v2.neighbours[v1] += weightage
+            else:
+                v1.neighbours[v2] = weightage
+                v2.neighbours[v1] = weightage
         else:
             # We didn't find an existing vertex for both items.
             raise ValueError
@@ -103,7 +107,6 @@ class Graph:
         return self._vertices[item]
 
 
-
 def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
     """
     Generates a WikiLink graph
@@ -124,3 +127,4 @@ graph1 = Graph()
 graph1.add_vertex('https://en.wikipedia.org/wiki/Germany')
 generate_graph(graph1, 'https://en.wikipedia.org/wiki/Germany', 2)
 print(graph1.get_vertices())
+print(len(graph1.get_vertices()))
