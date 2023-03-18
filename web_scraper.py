@@ -29,7 +29,7 @@ def getlinks(soup: BeautifulSoup) -> dict:
                 '<a href="/wiki/Special:BookSources' in x or '<a href="/wiki/Category' in x or '/wiki/Help' in x):
             start = x.find('/')
             end = x.find(' title') - 1
-            x = x[start:end]
+            x = 'https://en.wikipedia.org' + x[start:end]
             if x not in linkdict:
                 linkdict[x] = 1
             else:
