@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import Any
+import web_scraper
 
 
 class _Vertex:
@@ -28,10 +29,12 @@ class Graph:
     #     - _vertices: A collection of the vertices contained in this graph.
     #                  Maps item to _Vertex instance.
     _vertices: dict[str, _Vertex]
+    items: set[str]
 
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
+        self.items = set()
 
     def add_vertex(self, item: Any) -> None:
         """Add a vertex with the given item to this graph.
@@ -42,6 +45,7 @@ class Graph:
             - item not in self._vertices
         """
         self._vertices[item] = _Vertex(item, {})
+        self.items.add(item)
 
     def add_edge(self, item1: Any, item2: Any, weightage: int) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -85,3 +89,59 @@ class Graph:
             return any(v2.item == item2 for v2 in v1.neighbours)
         else:
             return False
+
+    def get_vertices(self) -> dict:
+        """
+        returns dict of vertices
+        """
+        return self._vertices
+
+    def get_vertex(self, item) -> _Vertex:
+        """
+        returns vertex with item
+        """
+        return self._vertices[item]
+
+
+# def merge_graphs(graph1: Graph, graph2: Graph) -> Graph:
+#     """
+#     Merges 2 graphs into a single graph
+#     """
+#     graph1vertices = graph1.get_vertices()
+#     graph2vertices = graph2.get_vertices()
+#     if graph2.get_vertices() == {}:
+#         return graph1
+#     else:
+#         for vertex in graph2vertices:
+#             if vertex in graph1vertices:
+#                 for neighbour in graph2vertices[vertex].neighbours:
+#                     if neighbour in graph1vertices[vertex].neighbours:
+#                         graph1vertices[vertex].neighbours[neighbour] += graph2vertices[vertex].neighbours[neighbour]
+#                     else:
+#                         graph1vertices[vertex].neighbours[neighbour] = graph2vertices[vertex].neighbours[neighbour]
+#             else:
+#                 graph1vertices[vertex] = graph2vertices[vertex]
+#
+#     return graph1
+
+
+def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
+    """
+    Generates a WikiLink graph
+    """
+    if depth == 0:
+        return graph_so_far
+
+    else:
+        linkdict = web_scraper.get_url(url)
+        depth = depth - 1
+        for entry in linkdict:
+            graph_so_far.add_vertex(entry)
+            graph_so_far.add_edge(url, entry, linkdict[entry])
+            generate_graph(graph_so_far, entry, depth)
+
+
+graph1 = Graph()
+graph1.add_vertex('https://en.wikipedia.org/wiki/Germany')
+generate_graph(graph1, 'https://en.wikipedia.org/wiki/Germany', 2)
+print(graph1.get_vertices())
