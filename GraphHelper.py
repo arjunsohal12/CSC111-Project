@@ -103,27 +103,6 @@ class Graph:
         return self._vertices[item]
 
 
-# def merge_graphs(graph1: Graph, graph2: Graph) -> Graph:
-#     """
-#     Merges 2 graphs into a single graph
-#     """
-#     graph1vertices = graph1.get_vertices()
-#     graph2vertices = graph2.get_vertices()
-#     if graph2.get_vertices() == {}:
-#         return graph1
-#     else:
-#         for vertex in graph2vertices:
-#             if vertex in graph1vertices:
-#                 for neighbour in graph2vertices[vertex].neighbours:
-#                     if neighbour in graph1vertices[vertex].neighbours:
-#                         graph1vertices[vertex].neighbours[neighbour] += graph2vertices[vertex].neighbours[neighbour]
-#                     else:
-#                         graph1vertices[vertex].neighbours[neighbour] = graph2vertices[vertex].neighbours[neighbour]
-#             else:
-#                 graph1vertices[vertex] = graph2vertices[vertex]
-#
-#     return graph1
-
 
 def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
     """
