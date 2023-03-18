@@ -2,10 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.request import Request, urlopen
 
-website = 'https://en.wikipedia.org/wiki/University_of_Toronto'
+website = 'https://en.wikipedia.org/wiki/Canada'
+last_page = False
 
 
-def get_url(url):
+def get_url(url: str) -> dict:
     request = requests.get(url)
     if request.status_code != 200:
         print('Error, request status code of {}'.format(request.status_code))
@@ -16,13 +17,13 @@ def get_url(url):
 
     soup = BeautifulSoup(data, "html.parser")
 
-    getLinks(soup)
+    return getlinks(soup)
 
 
-def getLinks(soup):
-    allLinks = soup.find(id="bodyContent").find_all("a")
+def getlinks(soup: BeautifulSoup) -> dict:
+    alllinks = soup.find(id="bodyContent").find_all("a")
     linkdict = {}
-    for x in allLinks:
+    for x in alllinks:
         x = str(x)
         if '<a href="/wiki/' in x and not (
                 '<a href="/wiki/Special:BookSources' in x or '<a href="/wiki/Category' in x or '/wiki/Help' in x):
@@ -34,13 +35,20 @@ def getLinks(soup):
             else:
                 linkdict[x] += 1
 
-    print(getTopOccurences(linkdict))
+    return getTopOccurences(linkdict)
 
 
 def getTopOccurences(items: dict) -> dict:
-    sorted_dict = sorted(items.items(), key=lambda x: x[1], reverse=True)
-    if len(sorted_dict) > 10:
-        sorted_dict = sorted_dict[:10]
-    converted_dict = dict(sorted_dict)
-    return converted_dict
+    top_occurences = items.values()
+    list_of_values = set(top_occurences)
+    list_of_values = list(list_of_values)
+    list_of_values.sort(reverse=True)
+    final_dict = {}
+    for i in range(len(list_of_values)):
+        for item in items:
+            if items[item] == list_of_values[i]:
+                final_dict[item] = items[item]
+                if len(final_dict) == 10:
+                    return final_dict
 
+    return final_dict
