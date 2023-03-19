@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.request import Request, urlopen
 
-website = 'https://en.wikipedia.org/wiki/Germany'
+website = 'https://en.wikipedia.org/wiki/Canada'
 last_page = False
 
 
@@ -12,7 +12,7 @@ def get_url(url: str) -> dict | None:
         print('Error, request status code of {}'.format(request.status_code))
         return None
 
-    weburl = Request(website, headers={'User-Agent': 'Mozilla/5.0'})
+    weburl = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     data = urlopen(weburl).read()
 
     soup = BeautifulSoup(data, "html.parser")
@@ -48,3 +48,4 @@ def getTopOccurences(items: dict) -> dict:
 
 if __name__ == "__main__":
     print(get_url(website))
+
