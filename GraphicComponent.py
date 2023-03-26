@@ -1,9 +1,11 @@
 import pygame
 import sys
 import GraphHelper
+
 clock = pygame.time.Clock()
 pygame.init()
 screen = pygame.display.set_mode([1000, 525], pygame.NOFRAME)
+
 
 def searchbar(graph: GraphHelper.Graph):
     i = 0
@@ -29,19 +31,19 @@ def searchbar(graph: GraphHelper.Graph):
 
     bg = pygame.image.load("Assets/SearchBar.png")
     outputlink = ''
+
+    running = True
     while True:
 
         mx, my = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if text_rect.collidepoint(event.pos):
                     active = True
                 elif exit_rect.collidepoint(event.pos):
-                    pygame.quit()
-                    sys.exit()
+                    running = False
 
                 else:
                     active = False
@@ -50,8 +52,8 @@ def searchbar(graph: GraphHelper.Graph):
                     if event.key == pygame.K_BACKSPACE:
                         user_text = user_text[:-1]
                     elif event.key == pygame.K_RETURN:
-                        inputs.append(str(user_text))
-                        outputlink = 'https://en.wikipedia.org/wiki/' + user_text
+                        inputs.append(str(user_text.strip()))
+                        outputlink = 'https://en.wikipedia.org/wiki/' + user_text.replace(" ", "")
                         user_text = ""
                         i += 1
                     else:
@@ -60,6 +62,11 @@ def searchbar(graph: GraphHelper.Graph):
         if i == 1:
             graph.add_vertex(outputlink)
             GraphHelper.generate_graph(graph, outputlink, 2)
+
+        if not running:
+            pygame.quit()
+            break
+
         screen.blit(bg, (0, 0))
         text_surface = font.render(user_text, True, (0, 0, 0))
         text_rect.w = max((780, text_surface.get_width() + 10))
@@ -70,10 +77,11 @@ def searchbar(graph: GraphHelper.Graph):
         pygame.display.flip()
         clock.tick(60)
 
+
 graph1 = GraphHelper.Graph()
 print('hello')
 
 searchbar(graph1)
-print('hello')
 
 print(graph1.get_vertices())
+print(len(graph1.get_vertices()))
