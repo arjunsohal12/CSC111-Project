@@ -9,7 +9,7 @@ import GraphHelper
 def generate_coordinates(graph: GraphHelper.Graph):
     # Generate a dict of positions
     vertices = graph.get_vertices()
-    pos = {(vertex, vertices[vertex]): (random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)) for vertex in
+    pos = {(vertex, vertices[vertex]): (random.uniform(0, 3), random.uniform(0, 3), random.uniform(0, 3)) for vertex in
            vertices}
 
     return pos
@@ -29,7 +29,7 @@ def network_plot_3D(graph, pos_dict, angle):
         global fig
         global scat
 
-        fig = plt.figure(figsize=(20, 7))
+        fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(projection='3d')
 
         # Loop on the pos dictionary to extract the x,y,z coordinates of each node
@@ -57,7 +57,14 @@ def network_plot_3D(graph, pos_dict, angle):
 
     # Hide the axes
     ax.set_axis_off()
-
+    # rotate graph
+    #
+    # for angle in range(0, 360):
+    #     ax.view_init(30, angle)
+    #     plt.draw()
+    #     plt.pause(.000000000000000000000000001)
+    #
+    # return
 
 graph1 = GraphHelper.Graph()
 graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
