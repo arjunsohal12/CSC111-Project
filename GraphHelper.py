@@ -18,7 +18,11 @@ class _Vertex:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
-
+    def get_degree(self) -> int:
+        """
+        Returns the degree of this vertex
+        """
+        return len(self.neighbours)
 
 class Graph:
     """A graph.
@@ -147,7 +151,7 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
             generate_graph(graph_so_far, entry, depth)
 
 
-graph1 = Graph()
-graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
-generate_graph(graph1, 'https://en.wikipedia.org/wiki/Canada', 2)
-graph1.shortestPath('https://en.wikipedia.org/wiki/Canada')
+# graph1 = Graph()
+# graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
+# generate_graph(graph1, 'https://en.wikipedia.org/wiki/Canada', 2)
+# graph1.shortestPath('https://en.wikipedia.org/wiki/Canada')
