@@ -18,6 +18,7 @@ class _Vertex:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
+        
     def get_degree(self) -> int:
         """
         Returns the degree of this vertex
