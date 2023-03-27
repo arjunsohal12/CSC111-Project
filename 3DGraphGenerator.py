@@ -15,12 +15,6 @@ def generate_coordinates(graph: GraphHelper.Graph):
     return pos
 
 
-# graph1 = GraphHelper.Graph()
-# graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
-# GraphHelper.generate_graph(graph1, 'https://en.wikipedia.org/wiki/Canada', 2)
-#
-# print(generate_coordinates(graph1))
-
 def network_plot_3D(graph, pos_dict, angle):
     n = len(graph.get_vertices())
     cmap = plt.colormaps['plasma']
@@ -63,14 +57,7 @@ def network_plot_3D(graph, pos_dict, angle):
 
     # Hide the axes
     ax.set_axis_off()
-    # rotate graph
-    #
-    # for angle in range(0, 360):
-    #     ax.view_init(30, angle)
-    #     plt.draw()
-    #     plt.pause(.000000000000000000000000001)
-    #
-    # return
+
 
 graph1 = GraphHelper.Graph()
 graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
