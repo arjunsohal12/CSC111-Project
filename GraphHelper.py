@@ -18,12 +18,19 @@ class _Vertex:
         """Initialize a new vertex with the given item and neighbours."""
         self.item = item
         self.neighbours = neighbours
-        
+
     def get_degree(self) -> int:
         """
         Returns the degree of this vertex
         """
         return len(self.neighbours)
+
+    def get_neighbours(self) -> dict[_Vertex, float]:
+        return self.neighbours
+
+    def get_item(self) -> str:
+        return self.item
+
 
 class Graph:
     """A graph.
@@ -50,7 +57,6 @@ class Graph:
         if item not in self._vertices:
             self._vertices[item] = _Vertex(item, {})
             self.items.add(item)
-
 
     def add_edge(self, item1: Any, item2: Any, weightage: int) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -150,7 +156,6 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
             graph_so_far.add_vertex(entry)
             graph_so_far.add_edge(url, entry, linkdict[entry])
             generate_graph(graph_so_far, entry, depth)
-
 
 # graph1 = Graph()
 # graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
