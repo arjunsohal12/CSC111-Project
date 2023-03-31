@@ -1,8 +1,10 @@
 from __future__ import annotations
-from typing import Any
-import web_scraper
+
 import heapq
 import math
+from typing import Any
+
+import web_scraper
 
 
 class _Vertex:
@@ -40,6 +42,7 @@ class Graph:
     # Private Instance Attributes:
     #     - _vertices: A collection of the vertices contained in this graph.
     #                  Maps item to _Vertex instance.
+    center: str
     _vertices: dict[str, _Vertex]
     items: set[str]
 
@@ -47,6 +50,7 @@ class Graph:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
         self.items = set()
+        self.center = ''
 
     def add_vertex(self, item: Any) -> None:
         """Add a vertex with the given item to this graph.
@@ -56,6 +60,8 @@ class Graph:
         """
         if item not in self._vertices:
             self._vertices[item] = _Vertex(item, {})
+            if len(self.items) == 0:
+                self.center = item
             self.items.add(item)
 
     def add_edge(self, item1: Any, item2: Any, weightage: int) -> None:
@@ -112,34 +118,27 @@ class Graph:
         """
         return self._vertices[item]
 
-    def shortestPath(self, src: str):
-        # Create a priority queue to store vertices that
-        # are being preprocessed
+    def closestNodesToEachNode(self, src: str) -> set[str]:
+        minimum = 1
         pq = []
         heapq.heappush(pq, (0, src))
-
-        # Create a vector for distances and initialize all
-        # distances as infinite (INF)
         dist = {a: math.inf for a in self._vertices}
         dist[src] = 0
 
         while pq:
-            # The first vertex in pair is the minimum distance
-            # vertex, extract it from priority queue.
-            # vertex label is stored in second of pair
             d, u = heapq.heappop(pq)
-
-            # 'i' is used to get all adjacent vertices of a
-            # vertex
             for v, weight in self._vertices[u].neighbours.items():
-                # If there is shorted path to v through u.
                 if dist[v.item] > dist[u] + weight:
-                    # Updating distance of v
                     dist[v.item] = dist[u] + weight
                     heapq.heappush(pq, (dist[v.item], v.item))
 
+        set_so_far = set()
         for i in dist:
             print(f"{i} \t\t {dist[i]}")
+            if dist[i] < minimum and i != src:
+                set_so_far.add(i)
+
+        return set_so_far
 
 
 def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
