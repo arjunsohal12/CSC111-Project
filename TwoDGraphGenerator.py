@@ -1,7 +1,9 @@
 import math
 import random
 import webbrowser
+
 import pygame
+
 import ThreeDGraphGenerator
 from GraphHelper import Graph, generate_graph
 
@@ -13,6 +15,7 @@ radius = 15
 # colors
 white = (255, 255, 255)  # discovered state
 blue = (50, 50, 160)  # completed state fill
+red = (220, 20, 60)
 
 
 def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
@@ -38,7 +41,14 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
         currect = pygame.Rect(dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25)
         rectdict[node] = currect
         # pygame.draw.rect(screen, blue, (dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25))
-        circle_fill(dict_so_far[node], white, blue, radius, 2)
+        if final_graph.center == node:
+            circle_fill(dict_so_far[node], white, red, radius, 2)
+        else:
+            circle_fill(dict_so_far[node], white, blue, radius, 2)
+
+
+
+
     print(rectdict)
     screen.blit(settingstab, (1000, 0))
 
@@ -101,11 +111,8 @@ def createCoodinates(graph: Graph) -> dict[str:tuple[int, int]]:
 def generate_random_coordiante(dict_so_far: dict[str:tuple[int, int]]) -> tuple[int, int]:
     random_tuple = (
         round(random.uniform(radius, (display_width) - radius)), round(random.uniform(radius, display_height - radius)))
-    i = 0
-    while any(math.dist(random_tuple, dict_so_far[node]) < 3 * radius for node in dict_so_far):
-        print(i)
-        i += 1
 
+    while any(math.dist(random_tuple, dict_so_far[node]) < 3 * radius for node in dict_so_far):
         random_tuple = (round(random.uniform(radius, display_width - radius)),
                         round(random.uniform(radius, display_height - radius)))
 
@@ -119,6 +126,16 @@ def all_neighbours(graph: Graph) -> list[tuple[str, str]]:
             if tuple(sorted((node, neighbour.get_item()))) not in list_so_far:
                 list_so_far.append(tuple(sorted((node, neighbour.get_item()))))
     return list_so_far
+
+
+def selected_circle(currect_mouse: tuple[int, int], coordinates_dict: dict[str:tuple[int, int]]) -> str:
+    for node in coordinates_dict:
+        if math.dist(currect_mouse, coordinates_dict[node]) < radius:
+            return node
+
+    return ''
+
+
 
 
 graph1 = Graph()
