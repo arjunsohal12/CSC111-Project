@@ -78,19 +78,19 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
                         prevclick = rectdict[key]
                         if timer == 0:  # First mouse click.
                             timer = 0.00001
-                        elif timer < 0.002:
-                            webbrowser.open_new(key)
+                        elif timer < 0.5:
                             timer = 0
+                            webbrowser.open_new(key)
 
         if timer != 0:
             timer += dt
             # Reset after 0.5 seconds.
-            if timer >= 0.002:
+            if timer >= 0.5:
                 timer = 0
-
         if not running:
             pygame.quit()
             break
+        dt = clock.tick(30) / 1000
 
 
 def circle_fill(xy, line_color, fill_color, radius, thickness):
