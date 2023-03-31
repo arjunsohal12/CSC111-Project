@@ -82,6 +82,7 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
         if not running:
             pygame.quit()
             break
+        # TODO: add the buttons in settings tab to generate these animations
         if i == 0:
             #dfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far, neighbours_list
                      #, first_node=final_graph.get_vertices()[final_graph.center])
