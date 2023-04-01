@@ -8,7 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode([1000, 525], pygame.NOFRAME)
 
 
-def searchbar(graph: GraphHelper.Graph):
+def searchbar():
     i = 0
 
     font = pygame.font.Font("Assets/CaviarDreams.ttf", 30)
@@ -52,7 +52,7 @@ def searchbar(graph: GraphHelper.Graph):
                     if event.key == pygame.K_BACKSPACE:
                         user_text = user_text[:-1]
                     elif event.key == pygame.K_RETURN:
-                        inputs.append(str(user_text.strip()))
+
                         outputlink = 'https://en.wikipedia.org/wiki/' + user_text.replace(" ", "")
                         user_text = ""
                         graph = GraphHelper.Graph()
@@ -85,6 +85,4 @@ def searchbar(graph: GraphHelper.Graph):
         clock.tick(60)
 
 
-graph1 = GraphHelper.Graph()
-
-searchbar(graph1)
+searchbar()
