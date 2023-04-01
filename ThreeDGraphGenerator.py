@@ -1,7 +1,9 @@
 import random
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import animation
+
 import GraphHelper
 
 
@@ -14,8 +16,7 @@ def generate_coordinates(graph: GraphHelper.Graph):
     return pos
 
 
-def network_plot_3D(graph, pos_dict, angle):
-    n = len(graph.get_vertices())
+def network_plot_3d(pos_dict):
     cmap = plt.colormaps['plasma']
     # Get the maximum number of edges adjacent to a single node
     edge_max = max([vertex[1].get_degree() for vertex in pos_dict])
@@ -58,8 +59,6 @@ def network_plot_3D(graph, pos_dict, angle):
     ax.set_axis_off()
 
 
-
-
 def init():
     ax.view_init(elev=10., azim=0)
     return [scat]
@@ -74,6 +73,6 @@ def animate(i):
 
 def run_animation(graph: GraphHelper.Graph):
     posdict = generate_coordinates(graph)
-    network_plot_3D(graph, posdict, 0)
+    network_plot_3d(posdict)
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=360, interval=20, blit=True)
     plt.show()

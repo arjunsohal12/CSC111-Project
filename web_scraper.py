@@ -1,6 +1,7 @@
-from bs4 import BeautifulSoup
-import requests
 from urllib.request import Request, urlopen
+
+import requests
+from bs4 import BeautifulSoup
 
 
 def get_url(url: str) -> dict | None:
@@ -32,10 +33,10 @@ def getlinks(soup: BeautifulSoup) -> dict:
             else:
                 linkdict[x] += 1
 
-    return getTopOccurences(linkdict)
+    return get_top_occurences(linkdict)
 
 
-def getTopOccurences(items: dict) -> dict:
+def get_top_occurences(items: dict) -> dict:
     sorted_dict = sorted(items.items(), key=lambda x: x[1], reverse=True)
     if len(sorted_dict) > 10:
         sorted_dict = sorted_dict[:10]

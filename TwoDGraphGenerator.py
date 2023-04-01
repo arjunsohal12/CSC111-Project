@@ -5,7 +5,7 @@ import webbrowser
 import pygame
 
 import ThreeDGraphGenerator
-from GraphHelper import Graph, _Vertex, generate_graph
+from GraphHelper import Graph, _Vertex
 
 # constants
 display_width = 1000
@@ -51,7 +51,6 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
     timer = 0
     dt = 0
     prevclick = None
-    i = 0
     clicked_node = None
 
     while True:
@@ -68,8 +67,7 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
                              neighbours_list)
                 elif dfs_rect.collidepoint(event.pos):
                     dfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far,
-                             neighbours_list
-                             , first_node=final_graph.get_vertices()[final_graph.center])
+                             neighbours_list, first_node=final_graph.get_vertices()[final_graph.center])
                 for key in rectdict:
                     if rectdict[key].collidepoint(event.pos):
                         clicked_node = key
@@ -95,7 +93,7 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
         dt = clock.tick(30) / 1000
 
 
-def circle_fill(xy, line_color, fill_color, radius, thickness):
+def circle_fill(xy, line_color, fill_color, thickness):
     global screen
     # draw grey circle and then a smaller black to get 2 pixel circle
     pygame.draw.circle(screen, line_color, xy, radius)
@@ -131,8 +129,8 @@ def all_neighbours(graph: Graph) -> list[tuple[str, str]]:
 
 
 def draw_nodes(screen, dict_so_far, neighbours_list, final_graph,
-               color_mappings: dict[_Vertex, tuple[int, int, int]] = None
-               , edge_mapping: dict[tuple[str, str], tuple[int, int, int]] = None):
+               color_mappings: dict[_Vertex, tuple[int, int, int]] = None,
+               edge_mapping: dict[tuple[str, str], tuple[int, int, int]] = None):
     if color_mappings is None and edge_mapping is None:
         for neighbours_pair in neighbours_list:
             pygame.draw.line(screen, white, dict_so_far[neighbours_pair[0]], dict_so_far[neighbours_pair[1]], 2)
@@ -141,16 +139,16 @@ def draw_nodes(screen, dict_so_far, neighbours_list, final_graph,
             currect = pygame.Rect(dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25)
             rectdict[node] = currect
             if final_graph.center == node:
-                circle_fill(dict_so_far[node], white, red, radius, 2)
+                circle_fill(dict_so_far[node], white, red, 2)
             else:
-                circle_fill(dict_so_far[node], white, blue, radius, 2)
+                circle_fill(dict_so_far[node], white, blue, 2)
     else:
         for neighbours_pair in edge_mapping:
             pygame.draw.line(screen, edge_mapping[neighbours_pair], dict_so_far[neighbours_pair[0]],
                              dict_so_far[neighbours_pair[1]], 2)
 
         for node in dict_so_far:
-            circle_fill(dict_so_far[node], white, color_mappings[final_graph.get_vertices()[node]], radius, 2)
+            circle_fill(dict_so_far[node], white, color_mappings[final_graph.get_vertices()[node]], 2)
 
         pygame.display.flip()
         clock.tick(5)
@@ -208,7 +206,7 @@ def dijkstra_anim(start_node: str, graph: Graph, screen: pygame.surface, dict_so
 
     currnode = graph.get_vertices()[start_node]
     color_mappings[currnode] = yellow
-    for node in graph.closestNodesToEachNode(start_node):
+    for node in graph.closest_nodes_to_each_node(start_node):
         color_mappings[graph.get_vertices()[node]] = red
 
     draw_nodes(screen, dict_so_far, neighbours_list, graph, color_mappings, edge_mapping)

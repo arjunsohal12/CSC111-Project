@@ -1,5 +1,5 @@
 import pygame
-import sys
+
 import GraphHelper
 import TwoDGraphGenerator
 
@@ -17,17 +17,15 @@ def searchbar():
 
     active = False
 
-    exit = pygame.image.load("Assets/Exit Right.png")
-    exit = pygame.transform.scale(exit, (40, 40))
+    exit_image = pygame.image.load("Assets/Exit Right.png")
+    exit_scaled = pygame.transform.scale(exit_image, (40, 40))
     exit_rect = pygame.Rect(950, 15, 40, 40)
 
     bg = pygame.image.load("Assets/SearchBar.png")
-    outputlink = ''
 
     running = True
     while True:
 
-        mx, my = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -68,6 +66,6 @@ def searchbar():
 
         screen.blit(text_surface, (text_rect.x + 5, text_rect.y + 10))
 
-        screen.blit(exit, (950, 15))
+        screen.blit(exit_scaled, (950, 15))
         pygame.display.flip()
         clock.tick(60)

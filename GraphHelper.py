@@ -120,7 +120,7 @@ class Graph:
         """
         return self._vertices[item]
 
-    def closestNodesToEachNode(self, src: str) -> set[str]:
+    def closest_nodes_to_each_node(self, src: str) -> set[str]:
         minimum = 2 * (sum(self.sum_weightage) / len(self.sum_weightage))
         pq = []
         heapq.heappush(pq, (0, src))
@@ -128,7 +128,7 @@ class Graph:
         dist[src] = 0
 
         while pq:
-            d, u = heapq.heappop(pq)
+            _, u = heapq.heappop(pq)
             for v, weight in self._vertices[u].neighbours.items():
                 if dist[v.item] > dist[u] + weight:
                     dist[v.item] = dist[u] + weight
