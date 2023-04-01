@@ -1,3 +1,15 @@
+"""
+CSC111: web_scraper
+
+This module contains methods pertaining to scraping the links that are passed in from the user in order to retreive
+HTML data, and parse it into a dictionary that will be inputted to the GraphMethods module in order to generate
+a WIKILINK graph.
+
+
+"""
+
+
+
 from urllib.request import Request, urlopen
 
 from bs4 import BeautifulSoup

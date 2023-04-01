@@ -1,3 +1,14 @@
+"""
+CSC111: MainMenu
+
+This module contains all methods necessary to run the main menu of WIKILINK, which is the search bar in which we will
+input the link to the website we wish to crawl and generate a graph from. This module will call methods from
+TwoDGraphGenerator, GraphMethods and web_scraper in order to create the representation of the WIKILINK graph.
+
+
+"""
+
+
 import pygame
 
 from GraphMethods import Graph, generate_graph

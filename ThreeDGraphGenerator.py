@@ -1,3 +1,13 @@
+"""
+CSC111: ThreeDGraphGenerator
+
+This module contains all methods necessary to produce graphics for the 3D portion of the WIKILINK interface. It includes
+methods that will produce the graph itself, and color and size the nodes based on their degree.
+
+
+"""
+
+
 import random
 
 import matplotlib.pyplot as plt

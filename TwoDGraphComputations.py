@@ -1,3 +1,14 @@
+"""
+CSC111: TwoDGraphComputations
+
+This module contains all methods necessary to perform computations necessary in generating a 2 dimensional
+representation of our WIKILINK graph, including generating coordinates, and finding neighbours. These methods will be
+called in the methods of the TwoDGraphGraphics module
+
+
+"""
+
+
 import math
 import random
 

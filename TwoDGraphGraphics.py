@@ -1,3 +1,13 @@
+"""
+CSC111: TwoDGraphGraphics
+
+This module contains all methods necessary to produce graphics for the 2D portion of the WIKILINK interface. It includes
+methods that will produce the graph itself, and perform the dfs, bfs, and dijkstra algorithms.
+
+
+"""
+
+
 import webbrowser
 
 import pygame

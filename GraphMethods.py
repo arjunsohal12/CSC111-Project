@@ -1,3 +1,11 @@
+"""
+CSC111: GraphMethods.py
+
+This module contains all classes and methods that pertain to constructing the graph ADT, including classes for vertices
+graphs, and recursively generating the WIKILINK graph using inputs, it includes two classes: _Vertex and Graph.
+
+"""
+
 from __future__ import annotations
 
 import heapq
@@ -28,14 +36,9 @@ class _Vertex:
         return len(self.neighbours)
 
     def get_neighbours(self) -> dict[_Vertex, float]:
-        """
-        Return a dictionary containing the neighbouring vertices of this vertex, along with the weight of the edges connecting them.
-        """
-
         return self.neighbours
 
     def get_item(self) -> str:
-        """Return the item held by this node"""
         return self.item
 
 
@@ -43,29 +46,23 @@ class Graph:
     """A graph.
     Representation Invariants:
     - all(item == self._vertices[item].item for item in self._vertices)
-    - all(item == self._vertices[item].item for item in items)
-    - all(weight > 0 for weight in self.weightage_list)
-    Instance Attributes:
-        -center: The center vertex of the graph (a string).
-        - items: A set containing the items held by all vertices in the graph (each item is a string).
-        - weightage_list: A list containing the weightage of all edges in the graph (each weightage is a float).
     """
-
-    center: str
-    items: set[str]
-    weightage_list: list[float]
     # Private Instance Attributes:
-    #  - _vertices: A dictionary mapping item strings to `_Vertex` instances.
+    #     - _vertices: A collection of the vertices contained in this graph.
+    #                  Maps item to _Vertex instance.
+    center: str
     _vertices: dict[str, _Vertex]
+    items: set[str]
+    sum_weightage: list[float]
 
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
         self.items = set()
         self.center = ''
-        self.weightage_list = []
+        self.sum_weightage = []
 
-    def add_vertex(self, item: str) -> None:
+    def add_vertex(self, item: Any) -> None:
         """Add a vertex with the given item to this graph.
         The new vertex is not adjacent to any other vertices.
         Preconditions:
@@ -82,7 +79,6 @@ class Graph:
         Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
         Preconditions:
             - item1 != item2
-            - weightage != 0
         """
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
@@ -99,30 +95,32 @@ class Graph:
             # We didn't find an existing vertex for both items.
             raise ValueError
 
+    def num_connections(self, item: Any) -> int:
+        """Return a set of the neighbours of the given item.
+        Note that the *items* are returned, not the _Vertex objects themselves.
+        Raise a ValueError if item does not appear as a vertex in this graph.
+        """
+        if item in self._vertices:
+            v = self._vertices[item]
+            return len(v.neighbours)
+        else:
+            raise ValueError
+
     def get_vertices(self) -> dict:
         """
         returns dict of vertices
         """
         return self._vertices
 
-    def get_vertex(self, item: str) -> _Vertex:
+    def get_vertex(self, item) -> _Vertex:
         """
         returns vertex with item
-        Preconditions:
-            - item in self._vertices
         """
         return self._vertices[item]
 
     def closest_nodes_to_each_node(self, src: str) -> set[str]:
-        """
-        Finds and returns the set of nodes in the graph that are closest to each node, excluding the source node by
-        using the dijkstra's algorithm.
 
-        Preconditions:
-        - src in self._vertices
-        """
-
-        minimum = 2 * (sum(self.weightage_list) / len(self.weightage_list))
+        minimum = 2 * (sum(self.sum_weightage) / len(self.sum_weightage))
         pq = []
         heapq.heappush(pq, (0, src))
         dist = {a: math.inf for a in self._vertices}
@@ -145,12 +143,7 @@ class Graph:
 
 def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
     """
-    Generates a WikiLink graph from the given starting URL to a certain depth.
-
-    Preconditions:
-    - The graph_so_far parameter is a Graph object that represents the graph generated so far.
-    - The url parameter is a string that represents a valid URL for a Wikipedia article.
-    - depth >= 0
+    Generates a WikiLink graph
     """
 
     if depth == 0:
@@ -162,5 +155,5 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
         for entry in linkdict:
             graph_so_far.add_vertex(entry)
             graph_so_far.add_edge(url, entry, linkdict[entry])
-            graph_so_far.weightage_list.append(1 / linkdict[entry])
+            graph_so_far.sum_weightage.append(1 / linkdict[entry])
             generate_graph(graph_so_far, entry, depth)
