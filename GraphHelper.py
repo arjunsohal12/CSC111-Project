@@ -46,13 +46,13 @@ class Graph:
     center: str
     _vertices: dict[str, _Vertex]
     items: set[str]
-
+    sum_weightage: list[float]
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
         self.items = set()
         self.center = ''
-
+        self.sum_weightage = []
     def add_vertex(self, item: Any) -> None:
         """Add a vertex with the given item to this graph.
         The new vertex is not adjacent to any other vertices.
@@ -120,7 +120,8 @@ class Graph:
         return self._vertices[item]
 
     def closestNodesToEachNode(self, src: str) -> set[str]:
-        minimum = 1
+        minimum = 2 * (sum(self.sum_weightage) / len(self.sum_weightage))
+        print(minimum)
         pq = []
         heapq.heappush(pq, (0, src))
         dist = {a: math.inf for a in self._vertices}
@@ -146,7 +147,6 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
     """
     Generates a WikiLink graph
     """
-    global sum_weightage
 
     if depth == 0:
         return graph_so_far
@@ -157,7 +157,7 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
         for entry in linkdict:
             graph_so_far.add_vertex(entry)
             graph_so_far.add_edge(url, entry, linkdict[entry])
-            sum_weightage.append(linkdict[entry])
+            graph_so_far.sum_weightage.append(1 / linkdict[entry])
             generate_graph(graph_so_far, entry, depth)
 
 # graph1 = Graph()
