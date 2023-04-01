@@ -45,6 +45,11 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
     exit_rect = pygame.Rect(1182, 699, 50, 50)
     ThreeD_rect = pygame.Rect(1184, 148, 50, 50)
     # pygame.draw.rect(screen, blue, (1184, 148, 50, 50))
+    # pygame.draw.rect(screen, blue, (1184, 230, 50, 50))
+    # pygame.draw.rect(screen, blue, (1184, 300, 50, 50))
+
+    dfs_rect = pygame.Rect(1184, 230, 50, 50)
+    bfs_rect = pygame.Rect(1184, 300, 50, 50)
 
     clock.tick(60)
     pygame.display.update()
@@ -64,6 +69,13 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
                     running = False
                 elif ThreeD_rect.collidepoint(event.pos):
                     ThreeDGraphGenerator.run_animation(final_graph)
+                elif bfs_rect.collidepoint(event.pos):
+                    bfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far,
+                             neighbours_list)
+                elif dfs_rect.collidepoint(event.pos):
+                    dfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far,
+                             neighbours_list
+                             , first_node=final_graph.get_vertices()[final_graph.center])
                 for key in rectdict:
                     if rectdict[key].collidepoint(event.pos):
                         clicked_node = key
@@ -215,8 +227,7 @@ def dijkstra_anim(start_node: str, graph: Graph, screen: pygame.surface, dict_so
     color_mappings[currnode] = yellow
     for node in graph.closestNodesToEachNode(start_node):
         color_mappings[graph.get_vertices()[node]] = red
-        edge = tuple(sorted((node, currnode.item)))
-        edge_mapping[edge] = white
+
     draw_nodes(screen, dict_so_far, neighbours_list, graph, color_mappings, edge_mapping)
 
 
