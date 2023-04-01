@@ -6,6 +6,7 @@ from typing import Any
 
 import web_scraper
 
+sum_weightage = 0
 
 class _Vertex:
     """A vertex in a graph.
@@ -145,6 +146,8 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
     """
     Generates a WikiLink graph
     """
+    global sum_weightage
+
     if depth == 0:
         return graph_so_far
 
@@ -154,6 +157,7 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
         for entry in linkdict:
             graph_so_far.add_vertex(entry)
             graph_so_far.add_edge(url, entry, linkdict[entry])
+            sum_weightage += linkdict[entry]
             generate_graph(graph_so_far, entry, depth)
 
 # graph1 = Graph()
