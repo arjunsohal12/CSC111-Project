@@ -1,0 +1,3 @@
+import GraphicComponent
+
+GraphicComponent.searchbar()
