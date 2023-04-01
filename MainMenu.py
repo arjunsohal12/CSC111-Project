@@ -6,6 +6,7 @@ input the link to the website we wish to crawl and generate a graph from. This m
 TwoDGraphGenerator, GraphMethods and web_scraper in order to create the representation of the WIKILINK graph.
 
 
+This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
 
 

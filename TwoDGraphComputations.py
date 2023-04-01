@@ -6,6 +6,7 @@ representation of our WIKILINK graph, including generating coordinates, and find
 called in the methods of the TwoDGraphGraphics module
 
 
+This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
 
 

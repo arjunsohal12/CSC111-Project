@@ -6,6 +6,7 @@ HTML data, and parse it into a dictionary that will be inputted to the GraphMeth
 a WIKILINK graph.
 
 
+This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
 
 

@@ -4,6 +4,8 @@ CSC111: GraphMethods.py
 This module contains all classes and methods that pertain to constructing the graph ADT, including classes for vertices
 graphs, and recursively generating the WIKILINK graph using inputs, it includes two classes: _Vertex and Graph.
 
+
+This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
 
 from __future__ import annotations
