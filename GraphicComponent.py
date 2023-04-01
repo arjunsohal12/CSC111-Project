@@ -1,6 +1,7 @@
 import pygame
 import sys
 import GraphHelper
+import TwoDGraphGenerator
 
 clock = pygame.time.Clock()
 pygame.init()
@@ -17,7 +18,6 @@ def searchbar(graph: GraphHelper.Graph):
 
     color_active = pygame.Color('lightskyblue3')
     color_passive = pygame.Color('gray15')
-    color = color_passive
 
     user_text = ''
     text_rect = pygame.Rect(120, 280, 140, 55)
@@ -55,6 +55,12 @@ def searchbar(graph: GraphHelper.Graph):
                         inputs.append(str(user_text.strip()))
                         outputlink = 'https://en.wikipedia.org/wiki/' + user_text.replace(" ", "")
                         user_text = ""
+                        graph = GraphHelper.Graph()
+                        graph.add_vertex(outputlink)
+                        GraphHelper.generate_graph(graph, outputlink, 2)
+                        dicti = TwoDGraphGenerator.createCoodinates(graph)
+                        TwoDGraphGenerator.run(dicti, graph)
+
                         i += 1
                     else:
                         user_text += event.unicode
@@ -65,6 +71,7 @@ def searchbar(graph: GraphHelper.Graph):
 
         if not running:
             pygame.quit()
+
             break
 
         screen.blit(bg, (0, 0))
@@ -79,9 +86,5 @@ def searchbar(graph: GraphHelper.Graph):
 
 
 graph1 = GraphHelper.Graph()
-print('hello')
 
 searchbar(graph1)
-
-print(graph1.get_vertices())
-print(len(graph1.get_vertices()))
