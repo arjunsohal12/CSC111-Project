@@ -2,9 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.request import Request, urlopen
 
-website = 'https://en.wikipedia.org/wiki/Canada'
-last_page = False
-
 
 def get_url(url: str) -> dict | None:
     request = requests.get(url)
@@ -44,8 +41,3 @@ def getTopOccurences(items: dict) -> dict:
         sorted_dict = sorted_dict[:10]
     converted_dict = dict(sorted_dict)
     return converted_dict
-
-
-if __name__ == "__main__":
-    print(get_url(website))
-

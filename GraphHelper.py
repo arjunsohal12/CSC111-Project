@@ -122,7 +122,6 @@ class Graph:
 
     def closestNodesToEachNode(self, src: str) -> set[str]:
         minimum = 2 * (sum(self.sum_weightage) / len(self.sum_weightage))
-        print(minimum)
         pq = []
         heapq.heappush(pq, (0, src))
         dist = {a: math.inf for a in self._vertices}
@@ -137,7 +136,6 @@ class Graph:
 
         set_so_far = set()
         for i in dist:
-            print(f"{i} \t\t {dist[i]}")
             if dist[i] < minimum and i != src:
                 set_so_far.add(i)
 
@@ -160,8 +158,3 @@ def generate_graph(graph_so_far: Graph, url: str, depth: int) -> Graph:
             graph_so_far.add_edge(url, entry, linkdict[entry])
             graph_so_far.sum_weightage.append(1 / linkdict[entry])
             generate_graph(graph_so_far, entry, depth)
-
-# graph1 = Graph()
-# graph1.add_vertex('https://en.wikipedia.org/wiki/Canada')
-# generate_graph(graph1, 'https://en.wikipedia.org/wiki/Canada', 2)
-# graph1.shortestPath('https://en.wikipedia.org/wiki/Canada')

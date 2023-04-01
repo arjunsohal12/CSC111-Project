@@ -1,5 +1,4 @@
 import random
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import animation
@@ -57,14 +56,6 @@ def network_plot_3D(graph, pos_dict, angle):
 
     # Hide the axes
     ax.set_axis_off()
-    # rotate graph
-    #
-    # for angle in range(0, 360):
-    #     ax.view_init(30, angle)
-    #     plt.draw()
-    #     plt.pause(.000000000000000000000000001)
-    #
-    # return
 
 
 
@@ -86,9 +77,3 @@ def run_animation(graph: GraphHelper.Graph):
     network_plot_3D(graph, posdict, 0)
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=360, interval=20, blit=True)
     plt.show()
-
-
-# graph1 = GraphHelper.Graph()
-# graph1.add_vertex('https://en.wikipedia.org/wiki/Hart_House')
-# GraphHelper.generate_graph(graph1, 'https://en.wikipedia.org/wiki/Hart_House', 2)
-# run_animation(graph1)

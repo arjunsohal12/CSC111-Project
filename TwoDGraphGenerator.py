@@ -98,13 +98,6 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
         if not running:
             pygame.quit()
             break
-        # TODO: add the buttons in settings tab to generate these animations
-        if i == 0:
-            # dfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far, neighbours_list
-            # , first_node=final_graph.get_vertices()[final_graph.center])
-
-            # bfs_anim(final_graph.get_vertices()[final_graph.center], final_graph, screen, dict_so_far, neighbours_list)
-            i += 1
         dt = clock.tick(30) / 1000
 
 
@@ -153,7 +146,6 @@ def draw_nodes(screen, dict_so_far, neighbours_list, final_graph,
         for node in dict_so_far:
             currect = pygame.Rect(dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25)
             rectdict[node] = currect
-            # pygame.draw.rect(screen, blue, (dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25))
             if final_graph.center == node:
                 circle_fill(dict_so_far[node], white, red, radius, 2)
             else:
@@ -164,9 +156,6 @@ def draw_nodes(screen, dict_so_far, neighbours_list, final_graph,
                              dict_so_far[neighbours_pair[1]], 2)
 
         for node in dict_so_far:
-            # currect = pygame.Rect(dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25)
-            # rectdict[node] = currect
-            # pygame.draw.rect(screen, blue, (dict_so_far[node][0] - 15, dict_so_far[node][1] - 15, 25, 25))
             circle_fill(dict_so_far[node], white, color_mappings[final_graph.get_vertices()[node]], radius, 2)
 
         pygame.display.flip()
@@ -179,7 +168,7 @@ def bfs_anim(start_node: _Vertex, graph: Graph, screen: pygame.surface, dict_so_
     # pygame.time.delay(1000)
     color_mappings = {graph.get_vertices()[key]: black for key in graph.get_vertices()}
     edge_mapping = {neighbours_pair: grey for neighbours_pair in neighbours_list}
-    print(color_mappings)
+
     queue = [start_node]
     while len(queue) > 0:
         currnode = queue.pop(0)
@@ -222,17 +211,10 @@ def dijkstra_anim(start_node: str, graph: Graph, screen: pygame.surface, dict_so
                   neighbours_list):
     color_mappings = {graph.get_vertices()[key]: blue for key in graph.get_vertices()}
     edge_mapping = {neighbours_pair: white for neighbours_pair in neighbours_list}
-    print(color_mappings)
+
     currnode = graph.get_vertices()[start_node]
     color_mappings[currnode] = yellow
     for node in graph.closestNodesToEachNode(start_node):
         color_mappings[graph.get_vertices()[node]] = red
 
     draw_nodes(screen, dict_so_far, neighbours_list, graph, color_mappings, edge_mapping)
-
-
-graph1 = Graph()
-graph1.add_vertex('https://en.wikipedia.org/wiki/Hart_House')
-generate_graph(graph1, 'https://en.wikipedia.org/wiki/Hart_House', 2)
-dicti = createCoodinates(graph1)
-run(dicti, graph1)

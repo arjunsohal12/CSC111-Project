@@ -12,17 +12,9 @@ def searchbar():
     i = 0
 
     font = pygame.font.Font("Assets/CaviarDreams.ttf", 30)
-    font_25 = pygame.font.Font("Assets/CaviarDreams.ttf", 25)
-    font_20 = pygame.font.Font("Assets/CaviarDreams.ttf", 20)
-    font_25_bold = pygame.font.Font("Assets/CaviarDreams_Bold.ttf", 25)
-
-    color_active = pygame.Color('lightskyblue3')
-    color_passive = pygame.Color('gray15')
-
     user_text = ''
     text_rect = pygame.Rect(120, 280, 140, 55)
 
-    inputs = []
     active = False
 
     exit = pygame.image.load("Assets/Exit Right.png")
@@ -65,10 +57,6 @@ def searchbar():
                     else:
                         user_text += event.unicode
 
-        if i == 1:
-            graph.add_vertex(outputlink)
-            GraphHelper.generate_graph(graph, outputlink, 2)
-
         if not running:
             pygame.quit()
 
@@ -83,6 +71,3 @@ def searchbar():
         screen.blit(exit, (950, 15))
         pygame.display.flip()
         clock.tick(60)
-
-
-searchbar()
