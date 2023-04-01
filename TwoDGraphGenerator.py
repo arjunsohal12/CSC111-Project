@@ -33,9 +33,6 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
     screen.fill((0, 0, 0,))
     settingstab = pygame.image.load("Assets/settingsCSC111.png")
 
-    # for n1, n2 in edges:
-    #     pygame.draw.line(screen, white, graph[n1][0], graph[n2][0], 2)
-
     neighbours_list = all_neighbours(final_graph)
     rectdict = {}
     draw_nodes(screen, dict_so_far, neighbours_list, final_graph)
@@ -44,9 +41,6 @@ def run(dict_so_far: dict[str:tuple[int, int]], final_graph: Graph):
 
     exit_rect = pygame.Rect(1182, 699, 50, 50)
     ThreeD_rect = pygame.Rect(1184, 148, 50, 50)
-    # pygame.draw.rect(screen, blue, (1184, 148, 50, 50))
-    # pygame.draw.rect(screen, blue, (1184, 230, 50, 50))
-    # pygame.draw.rect(screen, blue, (1184, 300, 50, 50))
 
     dfs_rect = pygame.Rect(1184, 230, 50, 50)
     bfs_rect = pygame.Rect(1184, 300, 50, 50)
