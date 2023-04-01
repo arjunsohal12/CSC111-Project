@@ -6,7 +6,6 @@ from typing import Any
 
 import web_scraper
 
-sum_weightage = []
 
 class _Vertex:
     """A vertex in a graph.
@@ -47,12 +46,14 @@ class Graph:
     _vertices: dict[str, _Vertex]
     items: set[str]
     sum_weightage: list[float]
+
     def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
         self.items = set()
         self.center = ''
         self.sum_weightage = []
+
     def add_vertex(self, item: Any) -> None:
         """Add a vertex with the given item to this graph.
         The new vertex is not adjacent to any other vertices.
