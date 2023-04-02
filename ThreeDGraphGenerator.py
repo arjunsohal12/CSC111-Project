@@ -1,13 +1,9 @@
 """
 CSC111: ThreeDGraphGenerator
-
 This module contains all methods necessary to produce graphics for the 3D portion of the WIKILINK interface. It includes
 methods that will produce the graph itself, and color and size the nodes based on their degree.
-
 This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
-
-
 import random
 
 import matplotlib.pyplot as plt
@@ -18,7 +14,7 @@ from GraphMethods import Graph
 
 
 def generate_coordinates(graph: Graph):
-    # Generate a dict of positions
+    """Generates a dictionary of positions for each vertex in the given graph."""
     vertices = graph.get_vertices()
     pos = {(vertex, vertices[vertex]): (random.uniform(0, 4), random.uniform(0, 3), random.uniform(0, 3)) for vertex in
            vertices}
@@ -27,6 +23,10 @@ def generate_coordinates(graph: Graph):
 
 
 def network_plot_3d(pos_dict):
+    """
+    Generate a 3D network plot from a dictionary of positions.
+    """
+
     cmap = plt.colormaps['plasma']
     # Get the maximum number of edges adjacent to a single node
     edge_max = max([vertex[1].get_degree() for vertex in pos_dict])
@@ -70,11 +70,16 @@ def network_plot_3d(pos_dict):
 
 
 def init():
+    """Initialize the 3D network plot by setting the initial view and returning
+    the scatter plot object."""
     ax.view_init(elev=10., azim=0)
     return [scat]
 
 
 def animate(i):
+    """
+    Update the view of the 3D network plot by changing the azimuthal angle.
+    """
     ax.view_init(elev=10., azim=i)
     plt.draw()
     plt.pause(0.000001)
@@ -82,6 +87,7 @@ def animate(i):
 
 
 def run_animation(graph: Graph):
+    """Run an animation of a 3D network plot for a given graph."""
     posdict = generate_coordinates(graph)
     network_plot_3d(posdict)
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=360, interval=20, blit=True)

@@ -1,15 +1,10 @@
 """
 CSC111: MainMenu
-
 This module contains all methods necessary to run the main menu of WIKILINK, which is the search bar in which we will
 input the link to the website we wish to crawl and generate a graph from. This module will call methods from
 TwoDGraphGenerator, GraphMethods and web_scraper in order to create the representation of the WIKILINK graph.
-
-
 This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
-
-
 import pygame
 
 from GraphMethods import Graph, generate_graph
@@ -17,7 +12,13 @@ from TwoDGraphComputations import create_coodinates
 from TwoDGraphGraphics import run
 
 
-def run_main_menu():
+def run_main_menu() -> None:
+    """
+    This function runs the main menu for a Wikipedia graph visualization program using the Pygame library.
+    The main menu includes a search bar and an exit button, and allows the user to input a topic to search
+    for on Wikipedia. If the user presses Enter, the program generates a graph of the Wikipedia page for the given topic
+    and displays it using the run() function. The function takes no arguments and returns nothing.
+    """
     clock = pygame.time.Clock()
     pygame.init()
     screen = pygame.display.set_mode([1000, 525], pygame.NOFRAME)
