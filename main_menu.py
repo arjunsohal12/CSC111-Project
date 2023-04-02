@@ -55,14 +55,16 @@ def run_main_menu() -> None:
                     if event.key == pygame.K_BACKSPACE:
                         user_text = user_text[:-1]
                     elif event.key == pygame.K_RETURN:
-
-                        outputlink = 'https://en.wikipedia.org/wiki/' + user_text.replace(" ", "")
-                        user_text = ""
-                        graph = Graph()
-                        graph.add_vertex(outputlink)
-                        generate_graph(graph, outputlink, 2)
-                        graph_coordinates = create_coodinates(graph)
-                        run(graph_coordinates, graph)
+                        try:
+                            outputlink = 'https://en.wikipedia.org/wiki/' + user_text.replace(" ", "")
+                            user_text = ""
+                            graph = Graph()
+                            graph.add_vertex(outputlink)
+                            generate_graph(graph, outputlink, 2)
+                            graph_coordinates = create_coodinates(graph)
+                            run(graph_coordinates, graph)
+                        except:
+                            user_text = ''
 
                         i += 1
                     else:
