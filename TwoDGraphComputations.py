@@ -9,8 +9,11 @@ import math
 import random
 
 from GraphMethods import Graph
-from TwoDGraphGraphics import DISPLAY_HEIGHT, DISPLAY_WIDTH, RADIUS
 
+
+DISPLAY_WIDTH = 1000
+DISPLAY_HEIGHT = 800
+RADIUS = 15
 
 def create_coodinates(graph: Graph) -> dict[str:tuple[int, int]]:
     """Creates a dictionary of random (x,y) coordinates for each vertex in the graph"""
