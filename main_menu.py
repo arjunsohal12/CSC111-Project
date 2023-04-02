@@ -29,12 +29,15 @@ def run_main_menu() -> None:
     text_rect = pygame.Rect(120, 280, 140, 55)
 
     active = False
+    is_error = False
 
     exit_image = pygame.image.load("Assets/Exit Right.png")
     exit_scaled = pygame.transform.scale(exit_image, (40, 40))
     exit_rect = pygame.Rect(950, 15, 40, 40)
 
     bg = pygame.image.load("Assets/SearchBar.png")
+    try_again_image = pygame.image.load("Assets/TryAgain.jpeg")
+    try_again_scaled = pygame.transform.scale(try_again_image, (100, 100))
 
     running = True
     while True:
@@ -65,6 +68,7 @@ def run_main_menu() -> None:
                             run(graph_coordinates, graph)
                         except:
                             user_text = ''
+                            is_error = True
 
                         i += 1
                     else:
@@ -82,5 +86,8 @@ def run_main_menu() -> None:
         screen.blit(text_surface, (text_rect.x + 5, text_rect.y + 10))
 
         screen.blit(exit_scaled, (950, 15))
+        if is_error:
+            screen.blit(try_again_scaled, (450, 400))
+
         pygame.display.flip()
         clock.tick(60)
