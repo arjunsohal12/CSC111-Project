@@ -3,6 +3,7 @@ CSC111: TwoDGraphGraphics
 This module contains all methods necessary constants for the project¸.
 This file is Copyright (c) 2023 Arjun Sohal, Mani Tahami.
 """
+
 # lengths
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 800

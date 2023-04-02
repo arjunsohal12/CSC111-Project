@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import animation
 
-from graph_methods import Graph
+from graph_methods import Graph, _Vertex
 
 
-def generate_coordinates(graph: Graph):
+def generate_coordinates(graph: Graph) -> dict[tuple[str, _Vertex], tuple[float, float, float]]:
     """Generates a dictionary of positions for each vertex in the given graph."""
     vertices = graph.get_vertices()
     pos = {(vertex, vertices[vertex]): (random.uniform(0, 4), random.uniform(0, 3), random.uniform(0, 3)) for vertex in
@@ -22,7 +22,7 @@ def generate_coordinates(graph: Graph):
     return pos
 
 
-def network_plot_3d(pos_dict):
+def network_plot_3d(pos_dict: dict[tuple[str, _Vertex], tuple[float, float, float]]) -> None:
     """
     Generate a 3D network plot from a dictionary of positions.
     """
@@ -57,14 +57,14 @@ def network_plot_3d(pos_dict):
     ax.set_axis_off()
 
 
-def init():
+def init() -> list[plt.figure]:
     """Initialize the 3D network plot by setting the initial view and returning
     the scatter plot object."""
     ax.view_init(elev=10., azim=0)
     return [scat]
 
 
-def animate(i):
+def animate(i: int) -> list[plt.figure]:
     """
     Update the view of the 3D network plot by changing the azimuthal angle.
     """
@@ -74,7 +74,7 @@ def animate(i):
     return [scat]
 
 
-def run_animation(graph: Graph):
+def run_animation(graph: Graph) -> None:
     """Run an animation of a 3D network plot for a given graph."""
     posdict = generate_coordinates(graph)
     network_plot_3d(posdict)

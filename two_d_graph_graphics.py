@@ -14,13 +14,13 @@ from three_d_graph_generator import run_animation
 from two_d_graph_computations import all_neighbours
 
 
-def run(graph_coordinates: dict[str:tuple[int, int]], final_graph: Graph):
+def run(graph_coordinates: dict[str:tuple[int, int]], final_graph: Graph) -> None:
     """
     Run the graph visualization and interaction program.
     Preconditions:
         - all(node in final_graph.get_vertices() for node in graph_coordinates)
     """
-    global rectdict, clock
+    global rect_dict, clock
     running = True
     pygame.init()
 
@@ -31,7 +31,7 @@ def run(graph_coordinates: dict[str:tuple[int, int]], final_graph: Graph):
     settingstab = pygame.image.load("Assets/settingsCSC111.png")
 
     neighbours_list = all_neighbours(final_graph)
-    rectdict = {}
+    rect_dict = {}
     draw_nodes(screen, graph_coordinates, neighbours_list, final_graph)
 
     screen.blit(settingstab, (1000, 0))
@@ -65,12 +65,12 @@ def run(graph_coordinates: dict[str:tuple[int, int]], final_graph: Graph):
                 elif dfs_rect.collidepoint(event.pos):
                     dfs_anim(final_graph.get_vertex(final_graph.center), final_graph, screen, graph_coordinates,
                              neighbours_list, first_node=final_graph.get_vertex(final_graph.center))
-                for key in rectdict:
-                    if rectdict[key].collidepoint(event.pos):
+                for key in rect_dict:
+                    if rect_dict[key].collidepoint(event.pos):
                         clicked_node = key
-                        if prevclick != rectdict[key]:
+                        if prevclick != rect_dict[key]:
                             timer = 0
-                        prevclick = rectdict[key]
+                        prevclick = rect_dict[key]
                         if timer == 0:
                             timer = 0.00001
                         elif timer < 0.5:
@@ -89,7 +89,7 @@ def run(graph_coordinates: dict[str:tuple[int, int]], final_graph: Graph):
 
 
 def circle_fill(screen: pygame.surface, xy: tuple[int, int], line_color: tuple[int, int, int],
-                fill_color: tuple[int, int, int], thickness: int):
+                fill_color: tuple[int, int, int], thickness: int) -> None:
     """
     Draws a circle filled with a specified color and a border line of a different color on a Pygame screen.
 
@@ -106,7 +106,7 @@ def circle_fill(screen: pygame.surface, xy: tuple[int, int], line_color: tuple[i
 def draw_nodes(screen: pygame.surface, coordinates_dict: dict[str:tuple[int, int]],
                neighbours_list: list[tuple[str, str]], final_graph: Graph,
                color_mappings: dict[_Vertex, tuple[int, int, int]] = None,
-               edge_mapping: dict[tuple[str, str], tuple[int, int, int]] = None):
+               edge_mapping: dict[tuple[str, str], tuple[int, int, int]] = None) -> None:
     """
     Draws the nodes of a graph on a Pygame screen, with optional color mappings for the vertices and edges.
 
@@ -123,7 +123,7 @@ def draw_nodes(screen: pygame.surface, coordinates_dict: dict[str:tuple[int, int
 
         for node in coordinates_dict:
             currect = pygame.Rect(coordinates_dict[node][0] - 15, coordinates_dict[node][1] - 15, 25, 25)
-            rectdict[node] = currect
+            rect_dict[node] = currect
             if final_graph.center == node:
                 circle_fill(screen, coordinates_dict[node], constants.WHITE, constants.RED, 2)
             else:
@@ -142,7 +142,7 @@ def draw_nodes(screen: pygame.surface, coordinates_dict: dict[str:tuple[int, int
 
 
 def bfs_anim(start_node: _Vertex, graph: Graph, screen: pygame.surface, coordinates_dict: dict[str:tuple[int, int]],
-             neighbours_list: list[tuple[str, str]]):
+             neighbours_list: list[tuple[str, str]]) -> None:
     """
     Performs breadth-first search on a given graph starting from the specified start node, and animates the process on a
     Pygame screen.
@@ -174,7 +174,8 @@ def bfs_anim(start_node: _Vertex, graph: Graph, screen: pygame.surface, coordina
 
 
 def dfs_anim(start_node: _Vertex, graph: Graph, screen: pygame.surface, coordinates_dict: dict[str:tuple[int, int]],
-             neighbours_list: list[tuple[str, str]], color_mappings=None, edge_mappings=None, first_node=None) -> None:
+             neighbours_list: list[tuple[str, str]], color_mappings: dict[_Vertex, tuple[int, int, int]] = None,
+             edge_mappings: dict[tuple[str, str], tuple[int, int, int]] = None, first_node: _Vertex = None) -> None:
     """
     Performs depth-first search on a given graph starting from the specified start node, and animates the process on a
     Pygame screen.

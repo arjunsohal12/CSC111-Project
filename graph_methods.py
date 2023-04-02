@@ -36,7 +36,8 @@ class _Vertex:
 
     def get_neighbours(self) -> dict[_Vertex, float]:
         """
-        Return a dictionary containing the neighbouring vertices of this vertex, along with the weight of the edges connecting them.
+        Return a dictionary containing the neighbouring vertices of this vertex, along
+        with the weight of the edges connecting them.
         """
 
         return self.neighbours
